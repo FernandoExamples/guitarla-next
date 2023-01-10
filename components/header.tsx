@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useCarritoContext } from '../context/carrito.context'
 import styles from '../styles/header.module.css'
 
 export default function Header() {
   const { pathname } = useRouter()
+  const { carrito } = useCarritoContext()
 
   const getNavClass = (path: string) => (pathname == path ? styles.active : '')
 
@@ -27,6 +29,11 @@ export default function Header() {
           </Link>
           <Link href="/tienda" className={getNavClass('/tienda')}>
             Tienda
+          </Link>
+
+          <Link href="/carrito" className={getNavClass('/carrito')}>
+            <img src="/img/carrito.png" alt="" width={30} height={25} /> (
+            {carrito.reduce((total, current) => total + current.cantidad, 0)})
           </Link>
         </nav>
       </div>
